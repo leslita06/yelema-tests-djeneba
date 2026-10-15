@@ -8,7 +8,7 @@
 body{font-family:Arial,Helvetica,sans-serif;color:var(--txt);margin:0;background:var(--fond);font-size:16px;line-height:1.45}
 .fictif{background:var(--jaune);border-left:8px solid var(--rouge);padding:10px 16px;font-weight:700;font-size:15px}
 header{background:#fff;border-bottom:4px solid var(--bleu);padding:14px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
-header img{width:64px;height:64px}
+header img{width:84px;height:84px}
 header h1{margin:0;font-size:26px;color:var(--marine)}
 header .sub{color:var(--gris);font-size:15px}
 .wrap{max-width:1180px;margin:0 auto;padding:16px}
@@ -96,7 +96,7 @@ const $=id=>document.getElementById(id);
 const fmt=n=>n.toLocaleString('fr-FR').replace(/\u202f/g,' ')+' FCFA';
 const jours=d=>Math.round((REF-new Date(d+'T00:00:00Z'))/864e5);
 const fdate=d=>d.split('-').reverse().join('/');
-const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])).replace(/E-(\d\d)/g,'E\u2011$1');
 let sortKey='retard',sortDir=-1,selCom='';
 const noms=D.com.map(c=>c.nom);
 $('fCom').innerHTML='<option value="">Tous</option>'+noms.map(n=>`<option>${esc(n)}</option>`).join('');
@@ -117,7 +117,7 @@ function kpis(){const I=filtresImp(),E=filtresEng();const tot=I.reduce((a,i)=>a+
  $('kpis').innerHTML=`<div class="kpi r"><div class="l">Impayés affichés</div><div class="v">${fmt(tot)}</div><div class="s">${I.length} client(s), FICTIF</div></div>
  <div class="kpi r"><div class="l">Dont plus de 60 jours</div><div class="v">${fmt(p60)}</div><div class="s">${tot?Math.round(p60/tot*100):0} % des impayés affichés</div></div>
  <div class="kpi"><div class="l">Activité septembre</div><div class="v">${ob?Math.round(re/ob*100):0} %</div><div class="s">${re} réalisés sur ${ob} M FCFA d'objectif, FICTIF</div></div>
- <div class="kpi j"><div class="l">Engagements en retard</div><div class="v">${eR}</div><div class="s">sur ${E.length} affiché(s), dont ${eF} tenu(s)</div></div>
+ <div class="kpi j"><div class="l">En retard ou sans porteur</div><div class="v">${eR}</div><div class="s">sur ${E.length} affiché(s), dont ${eF} tenu(s)</div></div>
  <div class="kpi"><div class="l">Comité de direction</div><div class="v">22/10</div><div class="s">jeudi 09h00, siège Koumassi (FICTIF), dans ${Math.round((new Date('2026-10-22')-REF)/864e5)} jours</div></div>`}
 function comBloc(){ $('com').innerHTML=D.com.map(c=>{const p=Math.round(c.real/c.obj*100),m=Math.max(c.obj,c.real);
  return `<div class="com ${selCom===c.nom?'sel':''}" data-n="${esc(c.nom)}"><div class="t"><span>${esc(c.nom)} <span class="note">${esc(c.zone)}</span></span><span>${c.real} / ${c.obj} M · ${p} %</span></div>
