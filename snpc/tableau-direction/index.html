@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>FICTIF · Tableau de bord direction · SNPC</title>
+<style>
+:root{--bleu:#1F5AA6;--marine:#1B3E7A;--rouge:#E2231A;--jaune:#FFC20E;--txt:#222;--gris:#5b6472;--bord:#d5dce8;--fond:#f3f6fb}
+*{box-sizing:border-box}
+body{font-family:Arial,Helvetica,sans-serif;color:var(--txt);margin:0;background:var(--fond);font-size:16px;line-height:1.45}
+.fictif{background:var(--jaune);border-left:8px solid var(--rouge);padding:10px 16px;font-weight:700;font-size:15px}
+header{background:#fff;border-bottom:4px solid var(--bleu);padding:14px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+header img{width:64px;height:64px}
+header h1{margin:0;font-size:26px;color:var(--marine)}
+header .sub{color:var(--gris);font-size:15px}
+.wrap{max-width:1180px;margin:0 auto;padding:16px}
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;background:#fff;border:1px solid var(--bord);border-radius:8px;padding:10px 12px;margin-bottom:14px}
+.bar label{font-size:14px;color:var(--gris);display:flex;flex-direction:column;gap:2px}
+select,input[type=search],button{font:inherit;font-size:15px;padding:7px 9px;border:1px solid var(--bord);border-radius:6px;background:#fff}
+button{cursor:pointer;background:var(--bleu);color:#fff;border-color:var(--bleu);font-weight:700}
+button.sec{background:#fff;color:var(--bleu)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:12px;margin-bottom:16px}
+.kpi{background:#fff;border:1px solid var(--bord);border-top:5px solid var(--bleu);border-radius:8px;padding:12px 14px}
+.kpi.r{border-top-color:var(--rouge)}.kpi.j{border-top-color:var(--jaune)}
+.kpi .v{white-space:nowrap;font-size:26px;font-weight:700;color:var(--marine)}
+.kpi .l{font-size:15px;font-weight:700}
+.kpi .s{font-size:13px;color:var(--gris)}
+section{background:#fff;border:1px solid var(--bord);border-radius:8px;padding:14px 16px;margin-bottom:16px}
+h2{margin:0 0 4px;font-size:21px;color:var(--bleu);border-left:6px solid var(--rouge);padding-left:10px}
+.note{font-size:14px;color:var(--gris);margin:4px 0 10px}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th{background:var(--bleu);color:#fff;text-align:left;padding:8px;cursor:pointer;white-space:nowrap}
+td{border-bottom:1px solid var(--bord);padding:7px 8px;vertical-align:top}
+tr:nth-child(even) td{background:#f6f9fd}
+.num{text-align:right;white-space:nowrap}
+.tag{display:inline-block;padding:2px 9px;border-radius:12px;font-size:13px;font-weight:700;white-space:nowrap}
+.t-r{background:#fdeeee;color:#a3150e;border:1px solid var(--rouge)}
+.t-j{background:#fff6dc;color:#7a5a00;border:1px solid var(--jaune)}
+.t-v{background:#e8f4ec;color:#1e6b36;border:1px solid #8cc7a0}
+.t-b{background:#eef3fa;color:var(--marine);border:1px solid var(--bleu)}
+.grid2{align-items:start;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:820px){.grid2{grid-template-columns:1fr}header h1{font-size:21px}table{font-size:14px}.scroll{overflow-x:auto}}
+.barre{background:#e6ecf5;border-radius:5px;height:16px;position:relative;margin:3px 0}
+.barre i{display:block;height:100%;border-radius:5px;background:var(--bleu)}
+.barre i.bas{background:var(--rouge)}
+.barre b{position:absolute;top:-2px;bottom:-2px;width:3px;background:var(--marine)}
+.com{padding:8px 0;border-bottom:1px solid var(--bord);cursor:pointer}
+.com.sel{background:#eef3fa}
+.com .t{display:flex;justify-content:space-between;font-weight:700}
+.arb{border:1px solid var(--bleu);background:#eef3fa;border-radius:8px;padding:10px 14px;margin:10px 0}
+.arb h3{margin:0 0 2px;font-size:17px;color:var(--marine)}
+.arb label{display:block;padding:3px 0;font-size:15px}
+.arb .reco{font-size:14px;margin-top:4px;color:var(--marine)}
+.agenda li{margin:4px 0}
+.hyp li{margin:3px 0}
+ul{margin:4px 0 4px 20px;padding:0}
+.pied{font-size:13px;color:var(--gris);padding:10px 16px 30px;max-width:1180px;margin:0 auto}
+.vide{color:var(--gris);font-style:italic;padding:8px}
+@media print{.bar button,.bar{display:none}}
+</style></head><body>
+<div class="fictif" id="bandeau">FICTIF : tous les noms de personnes, chiffres, montants, factures, échéances, rendez-vous et statuts de cette page sont inventés pour un test (15/10/2026). Seuls l'entreprise SNPC, son adresse et ses produits publics sont réels. Page non indexée, aucune donnée réelle de SNPC.</div>
+<header><img src="data:image/jpeg;base64,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" alt="logo SNPC"><div><h1>Tableau de bord direction</h1>
+<div class="sub">SNPC (Société Nouvelle de Produits Chimiques), pour la Directrice Générale · données FICTIVES arrêtées au jeudi 15/10/2026, 23h · préparé par Djénéba, assistante de direction</div></div></header>
+<div class="wrap">
+<div class="bar">
+<label>Commercial<select id="fCom"></select></label>
+<label>Retard des impayés<select id="fRet"><option value="">Tous</option><option value="60">Plus de 60 jours</option><option value="30">30 à 60 jours</option><option value="0">Moins de 30 jours</option></select></label>
+<label>Engagements<select id="fEng"><option value="">Tous</option><option value="retard">En retard</option><option value="semaine">À échéance cette semaine (jusqu'au 22/10)</option><option value="fait">Tenus</option><option value="sans">Sans porteur</option></select></label>
+<label>Recherche<input type="search" id="fQ" placeholder="client, porteur, E-05…"></label>
+<label>&nbsp;<button class="sec" id="rst" type="button">Réinitialiser</button></label>
+</div>
+<div class="kpis" id="kpis"></div>
+
+<div class="grid2">
+<section><h2>Activité des commerciaux, septembre</h2><div class="note">FICTIF, en millions de FCFA : réalisé contre objectif. Cliquer sur un commercial filtre toute la page.</div><div id="com"></div></section>
+<section><h2>Agenda du lendemain, vendredi 16/10</h2><div class="note">FICTIF, agenda de démonstration (l'agenda réel de SNPC n'est pas accessible).</div><ul class="agenda" id="agenda"></ul>
+<h3 style="margin:12px 0 2px;font-size:16px;color:var(--marine)">Ensuite</h3><ul id="proch"></ul></section>
+</div>
+
+<section><h2>Impayés à relancer</h2><div class="note" id="impNote"></div><div class="scroll"><table id="tImp"><thead></thead><tbody></tbody></table></div></section>
+<section><h2>Engagements en cours</h2><div class="note" id="engNote"></div><div class="scroll"><table id="tEng"><thead></thead><tbody></tbody></table></div></section>
+
+<section><h2>Arbitrages proposés</h2><div class="note">Ce sont des propositions. Rien n'est décidé, rien n'est envoyé : vos choix restent dans cette page, sur votre écran.</div><div id="arb"></div>
+<button type="button" id="cp">Copier mes choix</button> <span id="cpok" class="note"></span></section>
+
+<section><h2>Hypothèses et limites</h2><ul class="hyp">
+<li>Date de référence fixée au jeudi 15/10/2026 (valeur de test) : les retards se comptent à cette date, pas à la date du jour de lecture.</li>
+<li>Le rattachement de chaque client à un commercial, les numéros de facture, les échéances des engagements et le seuil de 45 jours sont inventés (FICTIF). Les montants et les jours de retard des cinq impayés viennent du jeu de données fictif commun aux tests.</li>
+<li>Les engagements viennent du suivi fictif du point recouvrement ; leurs échéances ont été recalées au 15/10 pour ce tableau.</li>
+<li>Messagerie, WhatsApp et agenda réels non lus : aucun chiffre ne vient d'une source réelle de SNPC.</li>
+<li>Réel : SNPC, Abidjan Koumassi, zone industrielle, 26 BP 01 Abidjan 26 (https://ci.linkedin.com/company/snpc-ci). Le site snpc-ci.com était injoignable le 15/10/2026. Charte : couleurs relevées à l'œil sur le logo LinkedIn (hex approximatifs).</li></ul></section>
+</div>
+<div class="pied">SNPC (Société Nouvelle de Produits Chimiques), zone industrielle de Koumassi, rue Antananarivo, 26 BP 01 Abidjan 26 · Document interne de la Direction · Page de test FICTIVE</div>
+<script>
+const D={"imp": [{"client": "BATIPRO CI", "facture": "2026-0412", "montant": 18400000, "echeance": "2026-08-24", "commercial": "Awa Coulibaly", "zone": "Abidjan Nord et Yopougon", "suivi": "2 relances faites, rendez-vous M. Hervé Ahoussou le 20/10 à 10h30", "suite": "Échéancier ou mise en demeure à trancher"}, {"client": "Grossiste Distribution Plateau Sud", "facture": "2026-0388", "montant": 9750000, "echeance": "2026-09-14", "commercial": "Marc Gnahoré", "zone": "Abidjan Sud", "suivi": "1re relance écrite non encore partie", "suite": "Valider le texte de relance (E-05)"}, {"client": "Quincaillerie Les Trois Palmiers", "facture": "2026-0431", "montant": 2380000, "echeance": "2026-10-01", "commercial": "Marc Gnahoré", "zone": "Abidjan Sud", "suivi": "Appel prévu à Mme Nadège Tano", "suite": "Obtenir un plan de règlement (E-06)"}, {"client": "Peinture Service Bouaké", "facture": "2026-0301", "montant": 5120000, "echeance": "2026-08-08", "commercial": "Brahima Soro", "zone": "Bouaké et centre", "suivi": "Litige de livraison ouvert", "suite": "Retrouver le bordereau signé (E-02)"}, {"client": "Chantier Résidence Les Orchidées", "facture": "2026-0447", "montant": 3600000, "echeance": "2026-10-06", "commercial": "Awa Coulibaly", "zone": "Abidjan Nord et Yopougon", "suivi": "Aucun contact pris, sans porteur", "suite": "Nommer un porteur (E-07)"}], "com": [{"nom": "Marc Gnahoré", "zone": "Abidjan Sud", "obj": 42, "real": 38}, {"nom": "Awa Coulibaly", "zone": "Abidjan Nord et Yopougon", "obj": 36, "real": 41}, {"nom": "Brahima Soro", "zone": "Bouaké et centre", "obj": 28, "real": 19}, {"nom": "Estelle Bamba", "zone": "San-Pédro et Ouest", "obj": 24, "real": 22}], "eng": [{"id": "E-01", "txt": "Rendre l'avis juridique sur le litige de livraison Peinture Service Bouaké", "porteur": "Me Salimata Ouattara", "par": "DG", "ech": "2026-10-22", "fait": 0, "bloc": "Bordereau signé introuvable (E-02)"}, {"id": "E-02", "txt": "Retrouver et transmettre le bordereau de livraison signé de Peinture Service Bouaké", "porteur": "M. Ismaël Diabaté", "par": "Mme Fanta Traoré", "ech": "2026-10-14", "fait": 0, "bloc": "Original chez le commercial de Bouaké, copie à demander à Brahima Soro"}, {"id": "E-03", "txt": "Confirmer par écrit une date de virement des 18 400 000 FCFA (facture 2026-0412)", "porteur": "M. Hervé Ahoussou (BATIPRO CI, externe)", "par": "Mme Fanta Traoré", "ech": "2026-10-20", "fait": 0, "bloc": ""}, {"id": "E-04", "txt": "Préparer le dossier du rendez-vous BATIPRO CI du 20/10 (historique, 2 relances déjà faites)", "porteur": "Mme Fanta Traoré", "par": "DG", "ech": "2026-10-19", "fait": 0, "bloc": ""}, {"id": "E-05", "txt": "Envoyer la 1re relance écrite à Grossiste Distribution Plateau Sud", "porteur": "Mme Fanta Traoré", "par": "DG", "ech": "2026-10-16", "fait": 0, "bloc": "Texte à valider par la DG"}, {"id": "E-06", "txt": "Appeler Mme Nadège Tano (Trois Palmiers) et obtenir un plan de règlement", "porteur": "Marc Gnahoré", "par": "M. Yao Kouadio", "ech": "2026-10-16", "fait": 0, "bloc": ""}, {"id": "E-07", "txt": "Prendre contact avec le Chantier Résidence Les Orchidées", "porteur": "Sans porteur", "par": "DG", "ech": "2026-10-19", "fait": 0, "bloc": "Aucun porteur nommé"}, {"id": "E-08", "txt": "Remettre le plan d'action commercial pour Bouaké et le centre", "porteur": "M. Yao Kouadio", "par": "DG", "ech": "2026-10-21", "fait": 0, "bloc": ""}, {"id": "E-09", "txt": "Transmettre le tableau d'activité hebdomadaire des 4 commerciaux", "porteur": "M. Yao Kouadio", "par": "DG", "ech": "2026-10-16", "fait": 0, "bloc": ""}, {"id": "E-10", "txt": "Fournir la balance âgée clients rapprochée de la comptabilité", "porteur": "M. Serge N'Guessan", "par": "Mme Fanta Traoré", "ech": "2026-10-13", "fait": 0, "bloc": "Écart de rapprochement sur 2 factures"}, {"id": "E-11", "txt": "Présenter au comité du 22/10 une règle de blocage des commandes au-delà de 45 jours d'échéance (seuil fictif)", "porteur": "Mme Fanta Traoré", "par": "DG", "ech": "2026-10-21", "fait": 0, "bloc": ""}, {"id": "E-12", "txt": "Remettre les objectifs d'octobre révisés des 4 commerciaux", "porteur": "M. Yao Kouadio", "par": "DG", "ech": "2026-10-30", "fait": 0, "bloc": ""}, {"id": "E-13", "txt": "Relever les factures échues de plus de 30 jours, Abidjan Nord et Yopougon", "porteur": "Awa Coulibaly", "par": "M. Yao Kouadio", "ech": "2026-10-23", "fait": 0, "bloc": ""}, {"id": "E-14", "txt": "Transmettre le point des encours clients de San-Pédro et de l'Ouest", "porteur": "Estelle Bamba", "par": "Mme Fanta Traoré", "ech": "2026-10-26", "fait": 0, "bloc": ""}, {"id": "E-15", "txt": "Envoyer la convocation du comité de direction du 22/10", "porteur": "Djénéba", "par": "DG", "ech": "2026-10-14", "fait": 1, "bloc": ""}, {"id": "E-16", "txt": "Caler le point recouvrement du lundi 19/10 à 15h00", "porteur": "Djénéba", "par": "DG", "ech": "2026-10-14", "fait": 1, "bloc": ""}], "agenda": [["08h30", "Siège, bureau de la DG", "Revoir le tableau d'activité des commerciaux avec M. Yao Kouadio (E-09)"], ["10h00", "Siège", "Point avec Mme Fanta Traoré : texte de relance Plateau Sud et dossier BATIPRO CI"], ["11h30", "Téléphone", "Appel de M. Serge N'Guessan sur la balance âgée (écart de 2 factures)"], ["14h30", "Siège", "Plage protégée : lecture de la note du comité du 22/10"], ["16h30", "Siège", "Signature du courrier de convocation et des relances validées"]], "proch": [["2026-10-19", "15h00", "Point recouvrement, salle de réunion du siège"], ["2026-10-20", "10h30", "Rendez-vous BATIPRO CI avec M. Hervé Ahoussou"], ["2026-10-22", "09h00", "Comité de direction, salle de réunion du siège Koumassi"], ["2026-10-27", "journée", "Déplacement à Bouaké (27 et 28/10)"]], "arb": [{"id": "A1", "titre": "BATIPRO CI : échéancier ou mise en demeure ?", "ctx": "18 400 000 FCFA, échus depuis 52 jours, 2 relances sans effet. Rendez-vous le 20/10 à 10h30.", "opts": ["Proposer un échéancier en 3 versements au rendez-vous du 20/10", "Préparer la mise en demeure, sans l'envoyer avant le 20/10", "Attendre le comité du 22/10 avant de choisir"], "reco": 0, "note": "Mon avis : A. Le rendez-vous est dans cinq jours, la mise en demeure se prépare en parallèle (avec Me Salimata Ouattara) mais ne part pas sans votre accord."}, {"id": "A2", "titre": "Peinture Service Bouaké : suspendre les livraisons ?", "ctx": "5 120 000 FCFA, 68 jours, litige de livraison. Le bordereau signé manque (E-02).", "opts": ["Suspendre les livraisons tant que le litige est ouvert", "Continuer les livraisons contre paiement comptant", "Ne rien changer avant l'avis juridique du 22/10"], "reco": 1, "note": "Mon avis : B. On protège la relation et l'exposition, sans accuser le client avant d'avoir le bordereau."}, {"id": "A3", "titre": "Règle de blocage des commandes au comité du 22/10", "ctx": "Proposition de Mme Fanta Traoré : blocage au-delà de 45 jours d'échéance (seuil fictif).", "opts": ["Adopter 45 jours, avec dérogation écrite de la DG", "Adopter 60 jours pour la première année", "Reporter et demander un chiffrage de l'effet sur les ventes"], "reco": 2, "note": "Mon avis : C. Sans l'effet chiffré sur Awa Coulibaly (22 M d'impayés rattachés pour 114 % de l'objectif), la règle peut freiner les meilleures ventes."}, {"id": "A4", "titre": "Résidence Les Orchidées : qui porte le dossier ?", "ctx": "3 600 000 FCFA, 9 jours. Aucun porteur nommé (E-07).", "opts": ["Awa Coulibaly, commerciale de la zone", "Mme Fanta Traoré, crédit et recouvrement", "M. Yao Kouadio, directeur commercial"], "reco": 1, "note": "Mon avis : B. Montant modeste, premier retard : un appel du recouvrement suffit, la commerciale est déjà sur BATIPRO CI."}, {"id": "A5", "titre": "Bouaké : plan d'action avant le déplacement du 27/10", "ctx": "Brahima Soro est à 19 sur 28 M FCFA en septembre (68 %), et le client le plus ancien est en litige.", "opts": ["Exiger le plan de M. Yao Kouadio avant le comité du 22/10", "Traiter le sujet sur place pendant le déplacement du 27/10", "Ajouter le point à l'ordre du jour du comité"], "reco": 0, "note": "Mon avis : A. Le plan arrive avant le comité (E-08), le déplacement sert ensuite à le vérifier sur place."}]};
+const REF=new Date('2026-10-15T00:00:00Z'),SEM=new Date('2026-10-22T00:00:00Z');
+const $=id=>document.getElementById(id);
+const fmt=n=>n.toLocaleString('fr-FR').replace(/\u202f/g,' ')+' FCFA';
+const jours=d=>Math.round((REF-new Date(d+'T00:00:00Z'))/864e5);
+const fdate=d=>d.split('-').reverse().join('/');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let sortKey='retard',sortDir=-1,selCom='';
+const noms=D.com.map(c=>c.nom);
+$('fCom').innerHTML='<option value="">Tous</option>'+noms.map(n=>`<option>${esc(n)}</option>`).join('');
+function statEng(e){ if(e.fait)return 'Tenu'; if(e.porteur==='Sans porteur')return 'Sans porteur'; const d=new Date(e.ech+'T00:00:00Z'); if(d<REF)return 'En retard'; if(d<=SEM)return 'Cette semaine'; return 'À venir'}
+function tagEng(s){return {'Tenu':'t-v','En retard':'t-r','Sans porteur':'t-r','Cette semaine':'t-j','À venir':'t-b'}[s]}
+function filtresImp(){const c=$('fCom').value,r=$('fRet').value,q=$('fQ').value.toLowerCase();
+ return D.imp.map(i=>({...i,retard:jours(i.echeance)})).filter(i=>(!c||i.commercial===c)&&(r===''||(r==='60'?i.retard>60:r==='30'?i.retard>=30&&i.retard<=60:i.retard<30))&&(!q||JSON.stringify(i).toLowerCase().includes(q)))}
+function filtresEng(){const c=$('fCom').value,f=$('fEng').value,q=$('fQ').value.toLowerCase();
+ const mine=D.imp.filter(i=>i.commercial===c).map(i=>i.client.toLowerCase());
+ return D.eng.map(e=>({...e,st:statEng(e)})).filter(e=>{
+  if(c&&!(e.porteur.includes(c)||e.par.includes(c)||mine.some(m=>e.txt.toLowerCase().includes(m.split(' (')[0])))) return false;
+ if(f==='retard'&&e.st!=='En retard')return false; if(f==='semaine'&&!(e.st==='Cette semaine'||e.st==='En retard'))return false;
+  if(f==='fait'&&e.st!=='Tenu')return false; if(f==='sans'&&e.st!=='Sans porteur')return false;
+  if(q&&!JSON.stringify(e).toLowerCase().includes(q))return false; return true})}
+function kpis(){const I=filtresImp(),E=filtresEng();const tot=I.reduce((a,i)=>a+i.montant,0),p60=I.filter(i=>i.retard>60).reduce((a,i)=>a+i.montant,0);
+ const eR=E.filter(e=>e.st==='En retard'||e.st==='Sans porteur').length,eF=E.filter(e=>e.st==='Tenu').length;
+ const C=$('fCom').value?D.com.filter(c=>c.nom===$('fCom').value):D.com;const ob=C.reduce((a,c)=>a+c.obj,0),re=C.reduce((a,c)=>a+c.real,0);
+ $('kpis').innerHTML=`<div class="kpi r"><div class="l">Impayés affichés</div><div class="v">${fmt(tot)}</div><div class="s">${I.length} client(s), FICTIF</div></div>
+ <div class="kpi r"><div class="l">Dont plus de 60 jours</div><div class="v">${fmt(p60)}</div><div class="s">${tot?Math.round(p60/tot*100):0} % des impayés affichés</div></div>
+ <div class="kpi"><div class="l">Activité septembre</div><div class="v">${ob?Math.round(re/ob*100):0} %</div><div class="s">${re} réalisés sur ${ob} M FCFA d'objectif, FICTIF</div></div>
+ <div class="kpi j"><div class="l">Engagements en retard</div><div class="v">${eR}</div><div class="s">sur ${E.length} affiché(s), dont ${eF} tenu(s)</div></div>
+ <div class="kpi"><div class="l">Comité de direction</div><div class="v">22/10</div><div class="s">jeudi 09h00, siège Koumassi (FICTIF), dans ${Math.round((new Date('2026-10-22')-REF)/864e5)} jours</div></div>`}
+function comBloc(){ $('com').innerHTML=D.com.map(c=>{const p=Math.round(c.real/c.obj*100),m=Math.max(c.obj,c.real);
+ return `<div class="com ${selCom===c.nom?'sel':''}" data-n="${esc(c.nom)}"><div class="t"><span>${esc(c.nom)} <span class="note">${esc(c.zone)}</span></span><span>${c.real} / ${c.obj} M · ${p} %</span></div>
+ <div class="barre"><i class="${p<80?'bas':''}" style="width:${c.real/m*100}%"></i><b style="left:${c.obj/m*100}%" title="objectif"></b></div></div>`}).join('');
+ document.querySelectorAll('.com').forEach(el=>el.onclick=()=>{selCom=selCom===el.dataset.n?'':el.dataset.n;$('fCom').value=selCom;maj()})}
+function tImp(){const I=filtresImp().sort((a,b)=>(a[sortKey]>b[sortKey]?1:-1)*sortDir);
+ const cols=[['client','Client'],['facture','Facture'],['montant','Montant'],['retard','Retard'],['commercial','Commercial'],['suivi','Où en est le recouvrement'],['suite','Prochaine étape']];
+ document.querySelector('#tImp thead').innerHTML='<tr>'+cols.map(c=>`<th data-k="${c[0]}">${c[1]}${sortKey===c[0]?(sortDir>0?' ▲':' ▼'):''}</th>`).join('')+'</tr>';
+ document.querySelector('#tImp tbody').innerHTML=I.length?I.map(i=>`<tr><td><b>${esc(i.client)}</b></td><td style="white-space:nowrap">${esc(i.facture)}</td><td class="num">${fmt(i.montant)}</td><td><span class="tag ${i.retard>60?'t-r':i.retard>=30?'t-j':'t-b'}">${i.retard} jours</span></td><td>${esc(i.commercial)}</td><td>${esc(i.suivi)}</td><td>${esc(i.suite)}</td></tr>`).join(''):'<tr><td colspan="7" class="vide">Aucun impayé pour ce filtre.</td></tr>';
+ $('impNote').textContent=`FICTIF. Retard compté au 15/10/2026. Cliquer sur un titre de colonne pour trier. ${I.length} ligne(s).`;
+ document.querySelectorAll('#tImp th').forEach(th=>th.onclick=()=>{const k=th.dataset.k;sortDir=sortKey===k?-sortDir:1;sortKey=k;maj()})}
+function tEng(){const E=filtresEng();
+ document.querySelector('#tEng thead').innerHTML='<tr><th>N°</th><th>Engagement</th><th>Porteur</th><th>Demandé par</th><th>Échéance</th><th>État</th><th>Ce qui bloque</th></tr>';
+ document.querySelector('#tEng tbody').innerHTML=E.length?E.map(e=>`<tr><td style="white-space:nowrap">${e.id}</td><td>${esc(e.txt)}</td><td>${esc(e.porteur)}</td><td>${esc(e.par==='DG'?'La Directrice Générale':e.par)}</td><td>${fdate(e.ech)}</td><td><span class="tag ${tagEng(e.st)}">${e.st}</span></td><td>${esc(e.bloc||'')}</td></tr>`).join(''):'<tr><td colspan="7" class="vide">Aucun engagement pour ce filtre.</td></tr>';
+ $('engNote').textContent=`FICTIF. État calculé au 15/10/2026 : en retard si l'échéance est passée, « cette semaine » jusqu'au 22/10. ${E.length} ligne(s).`}
+function statique(){ $('agenda').innerHTML=D.agenda.map(a=>`<li><b>${a[0]}</b> · ${esc(a[1])} : ${esc(a[2])}</li>`).join('');
+ $('proch').innerHTML=D.proch.map(a=>`<li><b>${fdate(a[0])}</b>, ${esc(a[1])} : ${esc(a[2])}</li>`).join('');
+ $('arb').innerHTML=D.arb.map(a=>`<div class="arb"><h3>${a.id}. ${esc(a.titre)}</h3><div class="note">${esc(a.ctx)}</div>`+a.opts.map((o,i)=>`<label><input type="radio" name="${a.id}" value="${'ABC'[i]}"> <b>${'ABC'[i]}</b> ${esc(o)}</label>`).join('')+`<div class="reco">${esc(a.note)}</div></div>`).join('')}
+function maj(){selCom=$('fCom').value;comBloc();kpis();tImp();tEng()}
+['fCom','fRet','fEng'].forEach(i=>$(i).onchange=maj);$('fQ').oninput=maj;
+$('rst').onclick=()=>{['fCom','fRet','fEng','fQ'].forEach(i=>$(i).value='');maj()};
+$('cp').onclick=()=>{const t='Mes choix (brouillon, rien n\'est envoyé) :\n'+D.arb.map(a=>{const r=document.querySelector(`input[name=${a.id}]:checked`);return `${a.id} ${a.titre} : ${r?r.value:'pas encore choisi'}`}).join('\n');
+ (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>$('cpok').textContent='Copié.').catch(()=>{$('cpok').textContent=t})};
+statique();maj();
+</script></body></html>
